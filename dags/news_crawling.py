@@ -96,6 +96,14 @@ sql_create_news_table = """
     );
 """
 
+sql_create_news_full_index_1 = """
+    CREATE FULLTEXT INDEX IF NOT EXISTS NEWS_FULLTEST_TITLE_INDEX ON NEWS(NEWSTITLE) WITH PARSER ngram;
+"""
+
+sql_create_news_full_index_2 = """
+    CREATE FULLTEXT INDEX IF NOT EXISTS NEWS_FULLTEST_DESC_INDEX ON NEWS(NEWSDESCRIPTION) WITH PARSER ngram;
+"""
+
 sql_truncate_news_table = """
     TRUNCATE TABLE NEWS;
 """
@@ -152,4 +160,4 @@ with DAG(
     )
 
     # 작업 순서 설정
-    create_news_table >> truncate_news_table >> fetch_news_data >> insert_news_data >> update_news_date
+    create_news_table >> sql_create_news_full_index_1 >> sql_create_news_full_index_2 >> truncate_news_table >> fetch_news_data >> insert_news_data >> update_news_date

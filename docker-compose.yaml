@@ -72,6 +72,9 @@ x-airflow-common:
     # The following line can be used to set a custom config file, stored in the local config folder
     # If you want to use it, outcomment it and replace airflow.cfg with the name of your config file
     # AIRFLOW_CONFIG: '/opt/airflow/config/airflow.cfg'
+    # MySQL connection environment variable
+    AIRFLOW_CONN_MYSQL_LOCAL_TEST: mysql://airflow:1234@localhost:3306/test
+
   volumes:
     - ./dags:/opt/airflow/dags
     - ${AIRFLOW_PROJ_DIR:-.}./logs:/opt/airflow/logs
